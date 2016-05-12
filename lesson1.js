@@ -1,34 +1,34 @@
-// Minimize the value |(A[0] + ... + A[P-1]) - (A[P] + ... + A[N-1])|.
-function TapeEquilibrium(A) {
-	var fp = [];
-	var sp = [];
-	var l = A.length-1;
-	for (var i = 0; i < l; i++) {
-		if (i === 0) fp.push(A[i]);
-		else fp.push(A[i] + fp[i-1]);
-		if (i === 0) sp.push(A[l]);
-		else sp.push(A[l-i] + sp[i-1]);
-	}
-	var result = -1;
-	for (var j = 0; j < l; j++) {
-		var minDiff = Math.abs(fp[j]-sp[l-1-j]);
-		if (minDiff < result || result < 0) result = minDiff;
-	}
-	return result;
-}
+/*********
+Iterations
+*********/
 
-// Find the missing element in a given permutation.
-function PermMissingElem(A) {
-	var sum = 0;
+// Find longest sequence of zeros in binary representation of an integer.
+// 1041 => 5 (10000010001)
+function BinaryGap(N) {
+	var maxGap = 0;
+	var currGap = 0;
+	var gapStarted = false;
+	var bin = _DecimalToBinary(N);
+	var A = ('' + bin).split('');
 	var l = A.length;
-	for (var i = 0; i < l; i++) {
-		sum += A[i];
+	if (l <= 2) return 0;
+	else {
+		var prevVal = '';
+		for (var i = 0; i < l; i++) {
+			if (A[i] === '1') gapStarted = true;
+			if (A[i] === '0' && gapStarted) {
+				currGap++;
+			}
+			else if (prevVal === '0' && A[i] === '1') {
+				maxGap = currGap > maxGap ? currGap : maxGap;
+				currGap = 0;
+			}
+			prevVal = A[i];
+		}
 	}
-	l += 1;
-	return ((l*l)+l)/2 - sum;
+	return maxGap;
 }
 
-// Count minimal number of jumps from position X to Y.
-function FrogJmp(X, Y, D) {
-	return Math.ceil((Y-X)/D);
+function _DecimalToBinary(N) {
+	return (N >>> 0).toString(2);
 }
