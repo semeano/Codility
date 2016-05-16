@@ -177,23 +177,3 @@ function StoneWall(H) {
 	}
 	return stones;
 }
-
-// N voracious fish are moving along a river. Calculate how many fish are alive.
-function Fish(A, B) {
-	if (A.length === 1) return 1;
-	for (var i = 1; i < A.length; i++) {
-		if (B[i-1] === 1 && B[i] === 0) {
-			if (A[i-1] > A[i]) {
-				A.splice(i,1);
-				B.splice(i,1);
-				i--;
-			}
-			else {
-				A.splice(i-1,1);
-				B.splice(i-1,1);	
-				i -= 2;
-			}
-		}
-	}
-	return A.length;
-}

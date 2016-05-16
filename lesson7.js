@@ -1,8 +1,61 @@
+/****************
+Stacks and Queues
+****************/
+
+// Determine whether a given string of parentheses is properly nested.
+// "{[()()]}" => 1 | "([)()]" => 0
+function Brackets(S) {
+	var A = S.split('');
+	var l = A.length;
+	if (l === 0) { return 1; }
+	if (l % 2 !== 0) { return 0; }
+	var stack = [];
+	for (var i = 0; i < l; i++) {
+		if (stack.length === 0) {
+			stack.push(A[i]);
+		}
+		else {
+			if (stack[stack.length-1] === '(' && A[i] === ')' ||
+				  stack[stack.length-1] === '[' && A[i] === ']' ||
+				  stack[stack.length-1] === '{' && A[i] === '}') {
+				stack.pop();
+			}
+			else {
+				stack.push(A[i]);
+			}
+		}
+	}
+	return stack.length === 0 ? 1 : 0;
+}
+
+// N voracious fish are moving along a river. Calculate how many fish are alive.
+function Fish(A, B) {
+	if (A.length === 1) return 1;
+	for (var i = 1; i < A.length; i++) {
+		if (B[i-1] === 1 && B[i] === 0) {
+			if (A[i-1] > A[i]) {
+				A.splice(i,1);
+				B.splice(i,1);
+				i--;
+			}
+			else {
+				A.splice(i-1,1);
+				B.splice(i-1,1);	
+				i -= 2;
+			}
+		}
+	}
+	return A.length;
+}
+
+
+
 // Find the maximal sum of any double slice.
 function MaxDoubleSliceSum(A) {
 	var l = A.length;
 	if (l === 3) return 0;
-	var s1 = s2 = [];
+	var s1 = [];
+	var s2 = [];
 	for (var h = 0; h < l; h++) { s1.push(0); s2.push(0); }
 	for (var i = 1; i < l-1; i++) {
 		s1[i] = Math.max(s1[i-1]+A[i], 0);
