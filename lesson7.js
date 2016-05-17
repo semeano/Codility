@@ -72,18 +72,18 @@ function StoneWall(H) {
 }
 
 // Determine whether given string of parentheses is properly nested.
+// S="(()(())())" => 1 | S="())" => 0
 function Nesting(S) {
-	if (S === '') return 1;
+	if (S === '') { return 1; }
 	var l = S.length;
-	if (l%2 !== 0 || S[0] !== '(' || S[l-1] !== ')') return 0;
+	if (l%2 !== 0 || S[0] !== '(' || S[l-1] !== ')') { return 0; }
 	var A = [];
 	for (var i = 0; i < S.length; i++) {
-		if (S[i] !== '(' && S[i] !== ')') return 0;
 		if (S[i] === '(') {
 			A.push(S[i]);
 		}
 		else {
-			if (A.length === 0) return 0;
+			if (A.length === 0) { return 0; }
 			A.splice(-1,1);
 		}
 	}
@@ -91,6 +91,8 @@ function Nesting(S) {
 }
 
 
+
+// Old lessons
 
 // Find the maximal sum of any double slice.
 function MaxDoubleSliceSum(A) {
