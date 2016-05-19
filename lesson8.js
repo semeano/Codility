@@ -3,40 +3,19 @@ Leader
 *****/
 
 // Find the index S such that the leaders of the sequences A[0], A[1], ..., A[S] and A[S + 1], A[S + 2], ..., A[N - 1] are the same.
+// [4,3,4,4,4,2] => 2
 function EquiLeader(A) {
   var l = A.length;
 	if (l <= 1) { return 0; }
 	var leader = _Leader(A);
 	if (leader === undefined) { return 0; }
-	var incLeaders = [];
-	var decLeaders = [];
-	var incOccurOfLeader  = 0;
-	var decOccurOfLeader  = 0;
-	for (var i = 0; i < l; i++) {
-		// Incremental
-		if (A[i] === leader) {
-			incOccurOfLeader++;
-		}
-		if (incOccurOfLeader > (i+1)/2) {
-			incLeaders.push(1);
-		}
-		else {
-			incLeaders.push(0);
-		}
-		// Decremental
-		if (A[l-i-1] === leader) {
-			decOccurOfLeader++;
-		}
-		if (decOccurOfLeader > (i+1)/2) {
-			decLeaders.unshift(1);
-		}
-		else {
-			decLeaders.unshift(0);
-		}
-	}
 	var result = 0;
-	for (var j = 1; j < l; j++) {
-		if (incLeaders[j-1] === decLeaders[j] && decLeaders[j] === 1) {
+	var currLeaders = 0;
+	for (var i = 0; i < l; i++) {
+		if (A[i] === leader.leader) {
+			currLeaders++;
+		}
+		if (currLeaders > (i+1)/2 && (leader.count-currLeaders) > (l-i-1)/2) {
 			result++;
 		}
 	}
@@ -69,5 +48,5 @@ function _Leader(A) {
 		}
 	}
 	if (occurencies <= l/2) { return undefined; }
-	return result;
+	return { leader: result, count: occurencies };
 }
