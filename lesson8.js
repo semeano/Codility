@@ -50,3 +50,23 @@ function _Leader(A) {
 	if (occurencies <= l/2) { return undefined; }
 	return { leader: result, count: occurencies };
 }
+
+// Dominator
+// Find an index of an array such that its value occurs at more than half of indices in the array.
+// [3,4,3,2,3,-1,3,3] => [0, 2, 4, 6, 7]
+function Dominator(A) {
+	var l = A.length;
+	if (l === 0) { return -1; }
+	if (l === 1) { return 0; }
+	var leader = _Leader(A);
+	if (leader !== undefined) {
+		for (var i = 0; i < l; i++) {
+			if (A[i] === leader.leader) {
+				return i;
+			}
+		}
+	}
+	else {
+		return -1;
+	}
+}
