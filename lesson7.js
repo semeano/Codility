@@ -89,18 +89,3 @@ function Nesting(S) {
 	}
 	return A.length === 0 ? 1 : 0;
 }
-
-
-
-// Old lessons
-
-// From reading material: https://codility.com/media/train/7-MaxSlice.pdf
-function _MaxSlice(A) {
-	var result = 0;
-	var max_ending = 0;
-	for (var i = 0; i < A.length; i++) {
-		max_ending = Math.max(0, max_ending + A[i]);
-		result = Math.max(result, max_ending);
-	}
-	return result;
-}

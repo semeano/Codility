@@ -12,15 +12,11 @@ function MaxProfit(A) {
 	for (var i = 1; i < l; i++) {
 		profit.push(A[i] - A[i-1]);
 	}
-	return _MaxSlice(profit);
-}
-
-function _MaxSlice(A) {
 	var maxEnding = 0;
 	var maxSlice = 0;
-	var l = A.length;
-	for (var i = 0; i < l; i++) {
-		maxEnding = maxEnding + A[i] > 0 ? maxEnding + A[i] : 0;
+	var pLength = profit.length;
+	for (var j = 0; j < pLength; j++) {
+		maxEnding = maxEnding + A[j] > 0 ? maxEnding + A[j] : 0;
 		maxSlice = maxEnding > maxSlice ? maxEnding : maxSlice;
 	}
 	return maxSlice;
@@ -29,6 +25,7 @@ function _MaxSlice(A) {
 // MaxDoubleSliceSum
 // Find the maximal sum of any double slice.
 // [3,2,6,-1,4,5,-1,2] => 17
+// Calculate prefixe sums in both directions (excluding first and last) and check where the sum of both slices is higher.
 function MaxDoubleSliceSum(A) {
 	var l = A.length;
 	if (l === 3) return 0;
@@ -46,4 +43,26 @@ function MaxDoubleSliceSum(A) {
 		max = Math.max(max, s1[k-1]+s2[k+1]);
 	}
 	return max;
+}
+
+// MaxSliceSum
+// Find a maximum sum of a compact subsequence of array elements.
+// [3,2,-6,4,0] => 5
+// [-10,-2,-15] => -2
+function MaxSliceSum(A) {
+	var l = A.length;
+	if (l === 1) { return A[0]; }
+	var maxEnding = 0;
+	var maxSlice = 0;
+	for (var i = 0; i < l; i++) {
+		maxEnding = maxEnding + A[i] > 0 ? maxEnding + A[i] : 0;
+		maxSlice = maxEnding > maxSlice ? maxEnding : maxSlice;
+	}
+	if (maxSlice === 0) {
+		maxSlice = A[0];
+		for (var j = 1; j < l; j++) {
+			if (maxSlice < A[j]) { maxSlice = A[j]; }
+		}
+	}
+	return maxSlice;
 }
