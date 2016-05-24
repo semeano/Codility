@@ -15,6 +15,8 @@ function EquiLeader(A) {
 		if (A[i] === leader.leader) {
 			currLeaders++;
 		}
+		// Check if the leader is a leader at the current point (number of occurences higher than half of the length),
+		// and, that the other half of the array complies with the same rule.
 		if (currLeaders > (i+1)/2 && (leader.count-currLeaders) > (l-i-1)/2) {
 			result++;
 		}
@@ -53,7 +55,8 @@ function _Leader(A) {
 
 // Dominator
 // Find an index of an array such that its value occurs at more than half of indices in the array.
-// [3,4,3,2,3,-1,3,3] => [0, 2, 4, 6, 7]
+// Or, in other words, find an index where the leader occurs.
+// [3,4,3,2,3,-1,3,3] => 0
 function Dominator(A) {
 	var l = A.length;
 	if (l === 0) { return -1; }

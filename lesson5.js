@@ -2,15 +2,17 @@
 Prefix sums
 **********/
 
-// Count the number of passing cars on the road. Array A contains only 0 (car traveling east) and 1 (car traveling west).
+// Count the number of passing cars on the road. Array A contains only "0" (car traveling east) and "1" (car traveling west).
 // We say that a pair of cars (P, Q), where 0 ≤ P < Q < N, is passing when P is traveling to the east and Q is traveling to the west.
-// [0,1,0,1,1] => 5 ()
+// [0,1,0,1,1] => 5 : (0,1), (0,3), (0,4), (2,3), (2,4)
 function PassingCars(A) {
 	var result = 0;
 	var l = A.length;
+	// Create an array of prefix sums
 	var P = _PrefixSums(A);
 	for (var i = 0; i < l; i++) {
 		if (A[i] === 0) {
+			// Add how many other "1" are ahead of the current position
 			result += (P[l] - P[i]);
 		}
 	}
@@ -28,19 +30,21 @@ function _PrefixSums(A) {
 	return P;
 }
 
-// Compute number of integers divisible by k in range [a..b].
+// Compute number of integers divisible by k in range [A..B].
 // For A = 6, B = 11 and K = 2, your function should return 3 (6, 8 and 10 are divisible by 2).
 function CountDiv(A, B, K) {
 	var result = 0;
 	if (A === B) {
-		result += A%K === 0 ? 1 : 0;
+		result = A%K === 0 ? 1 : 0;
 	}
 	else {
 		if (A === 0) {
-			result += 1;
+			result = 1;
 		}
+		// Calculate the number of integers divisible by B
 		result += B >= K ? Math.floor(B/K) : 0;
 		A--;
+		// Subtract the number of integers divisible by A-1
 		result -= A >= K ? Math.floor(A/K) : 0;
 	}
 	return result;
@@ -59,6 +63,7 @@ The part of the DNA between positions 2 and 4 contains nucleotides G and C (twic
 The part between positions 5 and 5 contains a single nucleotide T, whose impact factor is 4, so the answer is 4.
 The part between positions 0 and 6 (the whole string) contains all nucleotides, in particular nucleotide A whose impact factor is 1, so the answer is 1.
 */
+// ("CAGCCTA", [2,5,0], [4,5,6]) => [2,4,1]
 function GenomicRangeQuery(S, P, Q) {
 	// Create a matrix for every nucleotides occurency
 	var impactFactor = [];
@@ -80,7 +85,7 @@ function GenomicRangeQuery(S, P, Q) {
 			break;
 		}
 	}
-	// Get the prefix sums of the matrix
+	// Compute the prefix sums of the matrix
 	for (var j = 1; j < sLength; j++) {
 		for (var k = 0; k < 4; k++) {
 			impactFactor[j][k] += impactFactor[j-1][k];
@@ -96,6 +101,7 @@ function GenomicRangeQuery(S, P, Q) {
 			if (x > 0) {
 				prev = impactFactor[x-1][u];
 			}
+			// Check the difference in sums. If there's any then this is the minimal nucleotide.
 			if (impactFactor[y][u] - prev > 0) {
 				result.push(u+1);
 				break;
@@ -106,7 +112,8 @@ function GenomicRangeQuery(S, P, Q) {
 }
 
 // Find the minimal average of any slice containing at least two elements.
-// Every slice must be of size two or three. Slices of bigger sizes are created from such smaller slices. Therefore should any bigger slice have an optimal value, all sub-slices must be the same, for this case to hold true. Should this not be true, one of the sub-slices must be the optimal slice. The others being bigger. Therefore we check all possible slices of size 2/3 and return the smallest one.
+// Every slice must be of size two or three. Slices of bigger sizes are created from such smaller slices. Therefore should any bigger slice have an optimal value, all sub-slices must be the same, for this case to hold true. Therefore we check all possible slices of size 2/3 and return the smallest one.
+// [4,2,2,5,1,5,8] => 1 (being (1,2) the smaller slice)
 function MinAvgTwoSlice(A) {
 	var l = A.length;
 	var min = (A[0] + A[1])/2;

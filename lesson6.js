@@ -81,26 +81,7 @@ function MaxProductOfThree(A) {
 }
 
 // Compute the number of intersections in a sequence of discs.
-function NumberOfDiscIntersections(A) {
-	var l = A.length;
-	if (l < 2) { return 0; }
-	var t = [];
-	for (var i = 0; i < l; i++) {
-		t.push({ point: i-A[i], circle: 1 });
-		t.push({ point: i+A[i], circle: -1 });
-	}
-	t.sort(function (a, b) { return a.point - b.point || a.circle < 0; });
-	var cCircles = 0;
-	var intersections = 0;
-	for (var j = 0; j < t.length; j++) {
-		if (t[j].circle > 0) {
-			intersections += cCircles;
-		}
-		cCircles += t[j].circle;
-	}
-	return intersections > 10000000 ? -1 : intersections;
-}
-// 86% (does not pass the overflow tests)
+// 87% (does not pass the overflow tests)
 function NumberOfDiscIntersections(A) {
 	var min, max;
 	var l = A.length;

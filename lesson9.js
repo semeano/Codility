@@ -8,10 +8,12 @@ Maximum slice problem
 function MaxProfit(A) {
 	var l = A.length;
 	if (l <= 1) { return 0; }
+	// Compute the profit between each stock price
 	var profit = [];
 	for (var i = 1; i < l; i++) {
 		profit.push(A[i] - A[i-1]);
 	}
+	// Get the maximum slice
 	var maxEnding = 0;
 	var maxSlice = 0;
 	var pLength = profit.length;
@@ -25,7 +27,7 @@ function MaxProfit(A) {
 // MaxDoubleSliceSum
 // Find the maximal sum of any double slice.
 // [3,2,6,-1,4,5,-1,2] => 17
-// Calculate prefixe sums in both directions (excluding first and last) and check where the sum of both slices is higher.
+// Calculate prefix sums in both directions (excluding first and last) and check where the sum of both slices is higher.
 function MaxDoubleSliceSum(A) {
 	var l = A.length;
 	if (l === 3) return 0;
@@ -54,10 +56,12 @@ function MaxSliceSum(A) {
 	if (l === 1) { return A[0]; }
 	var maxEnding = 0;
 	var maxSlice = 0;
+	// Get max slice
 	for (var i = 0; i < l; i++) {
 		maxEnding = maxEnding + A[i] > 0 ? maxEnding + A[i] : 0;
 		maxSlice = maxEnding > maxSlice ? maxEnding : maxSlice;
 	}
+	// If it is zero, then get the lowest value (where it might actually be zero)
 	if (maxSlice === 0) {
 		maxSlice = A[0];
 		for (var j = 1; j < l; j++) {

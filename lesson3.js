@@ -10,10 +10,12 @@ function FrogJmp(X, Y, D) {
 // Minimize the value |(A[0] + ... + A[P-1]) - (A[P] + ... + A[N-1])|.
 // In other words, it is the absolute difference between the sum of the first part and the sum of the second part.
 // Write a function that, given a non-empty zero-indexed array A of N integers, returns the minimal difference that can be achieved.
+// [3,1,2,4,3] => 1 (6-7)
 function TapeEquilibrium(A) {
 	var fp = [];
 	var sp = [];
 	var l = A.length-1;
+	// Incremental and decremental prefix sums
 	for (var i = 0; i < l; i++) {
 		if (i === 0) fp.push(A[i]);
 		else fp.push(A[i] + fp[i-1]);
@@ -33,9 +35,12 @@ function TapeEquilibrium(A) {
 function PermMissingElem(A) {
 	var sum = 0;
 	var l = A.length;
+	// Get the sum of this array (with a missing element)
 	for (var i = 0; i < l; i++) {
 		sum += A[i];
 	}
+	// Compute the sum for an array with A.length+1 elements
+	// Subtracting this value with the sum of our array A, will give you the missing element
 	l += 1;
 	return (l*(l+1))/2 - sum;
 }

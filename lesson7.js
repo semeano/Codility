@@ -55,19 +55,21 @@ function StoneWall(H) {
 	var l = H.length;
 	if (l === 1) { return 1; }
 	var result = 0;
-	var stack = [];		// save active blocks
+	var stack = [];		// Save active blocks
 	for (var i = 0; i < l; i++) {
 		if (H[i] < stack[stack.length-1]) {
-			// remove from stack lower active blocks
+			// Remove from stack lower active blocks
 			while (H[i] < stack[stack.length-1]) {
 				stack.pop();
 				result++;
 			}
 		}
+		// Add to stack if current height is higher or there's no current active block
 		if (H[i] > stack[stack.length-1] || stack.length === 0) {
 			stack.push(H[i]);
 		}
 	}
+	// Return the counted blocks, plus the leftovers
 	return result + stack.length;
 }
 
